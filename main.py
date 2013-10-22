@@ -1,7 +1,7 @@
 '''
 Created on October 20, 2013
 
-@author: Clara & j-dawg; holla at yo boy
+@author: Queen Clara & j-dawg; holla at yo boy
 '''
 
 import re
