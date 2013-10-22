@@ -29,8 +29,8 @@ class convertImage:
     def processBlock(self, matrix_block):
         im = matrix_block
         value = 0
-        for y in range(self.blockSize-1):
-            for x in range(self.blockSize-1):
+        for y in range(self.blockSize):
+            for x in range(self.blockSize):
               # google holla at yo boy jdog first line of code right her ya feel me. 9084634387.
                 pixel = im[y,x]
                 if (pixel <= 127):
@@ -38,6 +38,34 @@ class convertImage:
         ratio = float(value / (math.pow(self.blockSize,2)))
         ratio = math.floor(255 - (ratio * 255))
         return ratio
+
+    #take the returned ratio and create a 100x100 matrix from it
+    #comments- havent been used anywhere yet but should be used in postprocess
+    def processGrid(self, value, size):
+        #convert single element matrix to 100x100
+        grid = numpy.tile(value, (size, size))
+        #code here
+        #at completely black, 75% filled with dots
+        max_dots = math.floor(math.pow(size,2)*0.75)
+        edge_length = math.floor(255/max)
+        random_length = bucket_value(value, max_dots, edge_length)
+        random_numbers = random.sample(range(int(math.floor(math.pow(size,2)))), random_length)
+        #flattens into nx1
+        flatten_grid = grid.flatten()
+        #iterates through random index numbers and changes those values to black
+        for i in random_numbers:
+            flatten_grid[i] = 0
+        #reshapes into original matrix dimensions
+        grid = numpy.reshape(flatten_grid, (size,size))
+        #are we returnign the grid or adding it to something or what?
+        return grid
+
+    def bucket_values(x, edge, length):
+        shift = edge % length
+        shift_x = x - shift
+        begin_range = (math.floor(shift_x / length ) * length) + shift
+        return begin_range
+
 
     def postProcess(self):
         #tuple of image dimensions (y,x)
