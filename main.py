@@ -48,7 +48,7 @@ class convertImage:
         #at completely black, 75% filled with dots
         max_dots = math.floor(math.pow(size,2)*0.75)
         edge_length = math.floor(255/max)
-        random_length = bucket_value(value, max_dots, edge_length)
+        random_length = self.bucket_value(value, max_dots, edge_length)
         random_numbers = random.sample(range(int(math.floor(math.pow(size,2)))), random_length)
         #flattens into nx1
         flatten_grid = grid.flatten()
